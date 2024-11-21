@@ -45,6 +45,38 @@ public class WeatherService {
 
     }
 
+    public WeatherDTO fetchWeather(String cityQuery) {
+        String urlCity = "https://open-weather13.p.rapidapi.com/city/";
+        System.out.println("I'm in the service class");
+        String newUrl = urlCity.concat(cityBreakDown(cityQuery).concat("/EN"));
+
+        try {
+
+            Request request = new Request.Builder()
+                    .url(newUrl)
+                    .get()
+                    .addHeader("x-rapidapi-key", apiKey)
+                    .addHeader("x-rapidapi-host", urlHost)
+                    .build();
+
+            try (Response response = client.newCall(request).execute()) {
+                if (response.isSuccessful() && response.body() != null) {
+                    String apiResponse = response.body().string();
+                    logger.info("API response received successfully: {}", apiResponse); // Log at INFO level
+                    System.out.println("This is the api response: " + apiResponse);
+                    return gson.fromJson(apiResponse, WeatherDTO.class); // Return it
+                } else {
+                    logger.error("API Error: {} - {}", response.code(), response.message()); // Log at ERROR level
+                    throw new IOException("API Error: " + response.code() + " - " + response.message());
+                }
+            }
+        } catch (IOException e) {
+            // Log the error (replace with proper logging in real applications)
+            System.err.println("Error while fetching weather: " + e.getMessage());
+            throw new RuntimeException("Failed to fetch weather data", e);
+        }
+    }
+
     public String getCurrentWeather(String cityQuery) {
         String urlCity = "https://open-weather13.p.rapidapi.com/city/";
         System.out.println("I'm in the service class");
