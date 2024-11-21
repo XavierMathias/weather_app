@@ -24,10 +24,8 @@ public class WeatherService {
     private static final Logger logger = LoggerFactory.getLogger(WeatherService.class);
 
 
-    public String getCurrentWeather(String cityQuery) {
-        String urlCity = "https://open-weather13.p.rapidapi.com/city/";
-        System.out.println("I'm in the service class");
-        String[] token = cityQuery.split("\\s+");
+    private String cityBreakDown(String city){
+        String[] token = city.split("\\s+");
         List<String> cityNameList = new ArrayList<>(Arrays.asList(token));
 
         String lastCityName = cityNameList.get(cityNameList.size()-1); // capturing the last element
@@ -43,7 +41,14 @@ public class WeatherService {
             }
         }
 
-        String newUrl = urlCity.concat(query.concat("/EN"));
+        return query;
+
+    }
+
+    public String getCurrentWeather(String cityQuery) {
+        String urlCity = "https://open-weather13.p.rapidapi.com/city/";
+        System.out.println("I'm in the service class");
+        String newUrl = urlCity.concat(cityBreakDown(cityQuery).concat("/EN"));
 
         try {
 
