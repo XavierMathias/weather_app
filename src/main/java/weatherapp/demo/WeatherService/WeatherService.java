@@ -57,6 +57,9 @@ public class WeatherService {
                 if (response.isSuccessful() && response.body() != null) {
                     String responseBody = response.body().string(); // Read the response body once
                     logger.info("API response received successfully: {}", responseBody); // Log at INFO level
+
+                    System.out.println();
+
                     return responseBody; // Return it
                 } else {
                     logger.error("API Error: {} - {}", response.code(), response.message()); // Log at ERROR level
