@@ -2,36 +2,13 @@ package weatherapp.demo.DTO;
 
 import java.util.List;
 
-public class ApiResponse {
+public class WeatherDTO {
+    private String name;
     private List<Weather> weather;
     private Main main;
     private Wind wind;
 
-    public List<Weather> getWeather() {
-        return weather;
-    }
-
-    public void setWeather(List<Weather> weather) {
-        this.weather = weather;
-    }
-
-    public Main getMain() {
-        return main;
-    }
-
-    public void setMain(Main main) {
-        this.main = main;
-    }
-
-    public Wind getWind() {
-        return wind;
-    }
-
-    public void setWind(Wind wind) {
-        this.wind = wind;
-    }
-
-    class Weather{
+    public class Weather{
         private int id;
         private String main, description;
 
@@ -60,7 +37,7 @@ public class ApiResponse {
         }
     } // end of Weather nested class
 
-    class Main {
+    public class Main {
         private double temp;
         private double feels_like;
         private double temp_min;
@@ -117,7 +94,7 @@ public class ApiResponse {
         }
     } // end of Main nested class
 
-    class Wind {
+    public class Wind {
         private double speed;
 
         public double getSpeed() {
@@ -128,6 +105,40 @@ public class ApiResponse {
             this.speed = speed;
         }
     } // end of Wind nested class
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public List<Weather> getWeather() {
+        return weather;
+    }
+
+    public void setWeather(List<Weather> weather) {
+        this.weather = weather;
+    }
+
+    public Main getMain() {
+        return main;
+    }
+
+    public void setMain(Main main) {
+        this.main = main;
+    }
+
+    public Wind getWind() {
+        return wind;
+    }
+
+    public void setWind(Wind wind) {
+        this.wind = wind;
+    }
+
+
 
     @Override
     public String toString() {

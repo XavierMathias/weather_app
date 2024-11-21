@@ -7,6 +7,7 @@ import okhttp3.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import weatherapp.demo.DTO.WeatherDTO;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -57,8 +58,12 @@ public class WeatherService {
                 if (response.isSuccessful() && response.body() != null) {
                     String responseBody = response.body().string(); // Read the response body once
                     logger.info("API response received successfully: {}", responseBody); // Log at INFO level
+                    WeatherDTO weatherDTO = gson.fromJson(responseBody, WeatherDTO.class);
 
-                    System.out.println();
+                    System.out.println("City: " + weatherDTO.getName());
+                    System.out.println("Temperature: " + weatherDTO.getMain().getTemp());
+                    System.out.println("Weather Description: " + weatherDTO.getWeather().get(0).getDescription());
+                    System.out.println("Wind speed: " + weatherDTO.getWind().getSpeed());
 
                     return responseBody; // Return it
                 } else {
